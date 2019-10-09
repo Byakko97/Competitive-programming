@@ -1,5 +1,6 @@
 string s;
 int SA[N], tempSA[N], RA[N], tempRA[N];
+int phi[N], lcp[N], plcp[N];
 int n;
 
 void csort(int k){
@@ -30,4 +31,22 @@ void build(){
 			RA[i]=tempRA[i];
 		if(r==n-1) break;		
 	}
+}
+
+void go(){
+	int k=0;
+	phi[SA[0]]=-1;
+	rep(i,1,n)
+		phi[SA[i]] = SA[i-1];
+	rep(i,0,n-1){
+		if(phi[i]==-1){
+			plcp[i]=0;
+			continue;
+		}
+		while(s[i+k]==s[phi[i]+k]) k++;
+		plcp[i]=k;
+		k=max(k-1,0);		
+	}
+	rep(i,0,n)
+		lcp[i]=plcp[SA[i]];
 }
