@@ -6,7 +6,7 @@ int c[N];
 
 void csort(int k){
 	int maxi = max(300,n);
-	For(i,0,n)
+	For(i,0,maxi)
 		c[i]=0;
 	For(i,0,n) 
 		c[i+k<n ? RA[i+k]:0]++;
