@@ -3,15 +3,16 @@
 
 deque<ii> CHT;
 
-lli eval(lli x, ii line){
-	return line.fst*x+line.snd;
+ll eval(ll x, ii line){
+	return line.ff*x+line.ss;
 }
 
 long double inter(ii a, ii b){
-	return ((b.snd-a.snd)*1.0)/(a.fst-b.fst);
+	return ((b.ss-a.ss)*1.0)/(a.ff-b.ff);
 }
-
-lli que(lli x){
+//Caso de maximización con pendiente decreciente.
+//También se puede forzar a la función a cumplir con este caso.
+ll que(ll x){
 	while(sz(CHT)>=2 && eval(x, CHT.back()) <= eval(x, CHT[sz(CHT)-2])) CHT.pop_back();
 	return eval(x, CHT.back());
 }
