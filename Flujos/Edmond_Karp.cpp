@@ -41,22 +41,11 @@ lli maxflow(int s, int t){
 	return flow;
 }
 
-int main(){
-    fastio;
-	cin>>n>>m;
-	int u, v, w;
-	int cont=0;
-	while(m--){
-		cin>>u>>v>>w;
-		rep(i,0,2){
-			adj[u].pb(mp(v,cont));
-			adj[v].pb(mp(u,cont+1));
-			cap[cont]=mp(w,u);
-			cap[cont+1]=mp(0,v);
-			cont+=2;
-			swap(u,v);
-		}
-	}
-	cout<< maxflow(1, n) << endl;
-    return 0;
+int cont;
+void add_edge(int u, int v, int w){
+	adj[u].pb(mp(v,cont));
+	adj[v].pb(mp(u,cont+1));
+	cap[cont]=mp(w,u);
+	cap[cont+1]=mp(0,v);
+	cont+=2;	
 }
