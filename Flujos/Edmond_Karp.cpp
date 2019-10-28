@@ -3,46 +3,46 @@ ii cap[2*N*N];
 int p[N];
 int n, m; 
 
-lli bfs(int s, int t){
-	rep(i,1,n+1) p[i]=-1;
+ll bfs(int s, int t){
+	For(i,0,n) p[i]=-1;
 	p[s]=-2;
 	queue<ii> Q;
 	Q.push(mp(s,INF));
 	while(!Q.empty()){
-		int v = Q.front().fst;
-		lli f = Q.front().snd;
+		int v = Q.front().ff;
+		ll f = Q.front().ss;
 		Q.pop();
 		for(ii u: adj[v]){
-			if(p[u.fst]==-1 && cap[u.snd].fst){
-				p[u.fst]=u.snd;
-				int nf = min(f, cap[u.snd].fst);
-				if(u.fst==t){
+			if(p[u.ff]==-1 && cap[u.ss].ff){
+				p[u.ff]=u.ss;
+				ll nf = min(f, cap[u.ss].ff);
+				if(u.ff==t){
 					return nf;
 				}
-				Q.push(mp(u.fst, nf));
+				Q.push(mp(u.ff, nf));
 			}
 		}
 	}
 	return 0;
 }
 
-lli maxflow(int s, int t){
-	lli flow=0;
-	lli nflow;
+ll maxflow(int s, int t){
+	ll flow=0;
+	ll nflow;
 	while(nflow=bfs(s, t)){
 		flow+=nflow;
 		int cur=t;
 		while(cur!=s){
-			cap[p[cur]].fst-=nflow;
-			cap[p[cur]^1].fst+=nflow;
-			cur = cap[p[cur]].snd;
+			cap[p[cur]].ff-=nflow;
+			cap[p[cur]^1].ff+=nflow;
+			cur = cap[p[cur]].ss;
 		}
 	}
 	return flow;
 }
 
 int cont;
-void add_edge(int u, int v, int w){
+void add_edge(int u, int v, lli w){
 	adj[u].pb(mp(v,cont));
 	adj[v].pb(mp(u,cont+1));
 	cap[cont]=mp(w,u);
