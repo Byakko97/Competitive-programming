@@ -42,7 +42,7 @@ ll maxflow(int s, int t){
 }
 
 int cont;
-void add_edge(int u, int v, lli w){
+void add_edge(int u, int v, ll w){
 	adj[u].pb(mp(v,cont));
 	adj[v].pb(mp(u,cont+1));
 	cap[cont]=mp(w,u);
