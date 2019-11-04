@@ -1,7 +1,7 @@
 vii adj[N];
 ii cap[2*N*N];
 int p[N];
-int n, m; 
+int n; 
 
 ll bfs(int s, int t){
 	For(i,0,n) p[i]=-1;
