@@ -30,10 +30,8 @@ struct MCF{
 		priority_queue < pair<ld,int> > q;
 		q.push(mp(0.0,s));
 		while(sz(q)){
-			if(dist[t]<INF) break; //comentar para comentarios negativos
+			if(dist[t]<INF) break; //comentar para pesos negativos
 			pair<ld, int> top = q.top(); q.pop();
-			trace(top.ff);
-			trace(top.ss);
 			if(fabs(dist[top.ss]+top.ff)>EPS) continue;
 			int u = top.ss;
 			for(int e = first[u]; e!=-1; e=g[e].next){
@@ -41,9 +39,6 @@ struct MCF{
 				ld ndist=-top.ff + g[e].cost;
 				if(g[e].cap>0 && dist[v]>ndist){
 					dist[v]=ndist;
-					trace("pusheando");
-					trace(v);
-					trace(-ndist);
 					q.push(mp(-ndist,v));
 					prev[v]=e;
 				}
@@ -59,7 +54,6 @@ struct MCF{
 				curf = min(curf, g[e].cap);
 				cur = g[e^1].to;
 			}
-			trace(dist[t]);
 			fl+=curf; cost+=(dist[t])*curf;
 			cur=t;
 			while(cur!=s){
