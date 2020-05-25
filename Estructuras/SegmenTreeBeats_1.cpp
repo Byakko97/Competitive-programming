@@ -1,5 +1,3 @@
-int n, m;
-
 struct nodo{
 	ll cantMay, may, second, sum;
 	bool leaf, lazy;
@@ -81,36 +79,4 @@ void upd(int ll, int rr, long long int x, int l=0, int r=n-1, int nodo=1){
 	upd(ll,rr,x,l,m,nodo<<1);
 	upd(ll,rr,x,m+1,r,nodo<<1|1);
 	build(nodo);
-}
-
-void read(int &x){
-	cin>>x;
-}
-
-void print(ll x){
-	cout << x << endl;
-}
-
-int main(){
-	fastio;
-	int tc; read(tc);
-	int type, x, y, a;
-	while(tc--){
-		read(n);
-		read(m);
-		For(i,0,n) read(A[i]);
-		init(0,n-1);
-		while(m--){
-			read(type);
-			read(x);
-			read(y);
-			x--; y--;
-			if(type==0){
-				read(a);
-				upd(x,y,a);
-			}else if(type==1) print(queMax(x,y));
-			else print(queSum(x,y));
-		}
-	}
-	return 0;
 }
