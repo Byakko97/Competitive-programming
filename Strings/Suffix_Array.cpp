@@ -45,7 +45,7 @@ void go(){
 			plcp[i]=0;
 			continue;
 		}
-		while(s[i+k]==s[phi[i]+k]) k++;
+		while(i+k<n && phi[i]+k<n && s[i+k]==s[phi[i]+k]) k++;
 		plcp[i]=k;
 		k=max(k-1,0);		
 	}
