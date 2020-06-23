@@ -1,18 +1,14 @@
 struct Trie{
-	int t[N][26], exit[N], tam[N], pos[N], link[N], nxt=1;
-	inline void add(const string& s, int p){
-		int v=0;
-		for(int i=0; i<sz(s); i++){
-			if(!t[v][s[i]]){
-				t[v][s[i]]=nxt++;
-				tam[nxt-1]=tam[v]+1;	
-			}
-			v = t[v][s[i]];
-		}
+	int t[N][63], exit[N], pos[N], link[N], deg[N], nxt=1;
+	vi adj[N];
+	inline void add(const vector<int>& s, int p){
+		int v = 0;
+		for(int c: s)
+			v = t[v][c] ? t[v][c]:(t[v][c]=nxt++);
 		exit[v]=v;
-		pos[v]=p;
+		ind[p]=v;
 	}
-	inline void go(){
+	inline void prec(){
 		queue<int> Q;
 		Q.push(0);
 		while(!Q.empty()){
@@ -20,21 +16,35 @@ struct Trie{
 			Q.pop();
 			int l = link[v];
 			if(!exit[v]) exit[v]=exit[l];
-			for(int i=0; i<26; i++){
+			adj[v].pb(l);
+			deg[l]++;
+			For(i,0,63){
 				if(t[v][i]){
 					link[t[v][i]] = v? t[l][i]:0;
 					Q.push(t[v][i]);
-				}else t[v][i] = t[l][i];
-			}				
+				}else t[v][i]=t[l][i];
+			}
 		}
 	}
-	inline void clear(){
-		for(int i=0; i<nxt; i++){
-			exit[i]=0;
-			tam[i]=0;
-			for(int j=0; j<26; j++)
-				t[i][j]=0;
+	inline void que(const vector<int>& text){
+		int v = 0;
+		for(int c: text){
+			v = t[v][c];
+			ans[exit[v]]++;
 		}
-		nxt=1;
+	}
+	inline void push(){
+		queue<int> Q;
+		For(i,0,nxt) if(deg[i]==0)
+			Q.push(i);
+		while(!Q.empty()){
+			int v = Q.front();
+			Q.pop();
+			for(int u: adj[v]){
+				ans[u]+=ans[v];
+				deg[u]--;
+				if(deg[u]==0) Q.push(u);
+			}
+		}
 	}
 } trie;
