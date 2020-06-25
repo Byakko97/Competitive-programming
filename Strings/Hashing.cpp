@@ -16,8 +16,8 @@ struct Hsh{
 		s = '#' + s;
 		pref[0]=pref2[0]=0;
 		For(i,1,sz(s)){
-			pref[i] = (pref[i-1]*p+s[i]-'a')%MOD;
-			pref2[i]= pref2[i-1]*p+s[i]-'a';
+			pref[i] = (pref[i-1]*p+s[i])%MOD;
+			pref2[i]= pref2[i-1]*p+s[i];
 		}
 	}
 	pair<ll, ull> get(int l, int r){ 
