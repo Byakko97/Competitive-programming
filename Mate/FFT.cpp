@@ -81,7 +81,3 @@ void multiply(vector<Complejo>& A, vector<Complejo>& B){
 	reverse(B.begin()+1, B.end());
 	fft(B);
 }
-inline ll conv(char c){
-	return c=='a'? 1:-1;
-}
-
