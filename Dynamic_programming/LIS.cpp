@@ -1,20 +1,10 @@
-lli A[N];
-lli MX[N]; //MX[i] -> posición del último valor de secuencia de tamaño i
-lli P[N]; //Padre de i
+vi aux;
 
-int lis=0;
-rep(i,0,cant){
-	int lo=1;
-	int hi=lis;
-	while(lo<=hi){
-		int mid= ceil((lo+hi)/2);
-		if(A[MX[mid]]<A[i]){ 
-			lo=mid+1;
-		}else{
-			hi=mid-1;
-		}
+int lis(vi& V){ 
+	for(auto x: V){
+		auto it = upper_bound(all(aux),x);
+		if(it==aux.end()) aux.pb(x);
+		else *it=x;
 	}
-	MX[lo]=i; //upper_bound
-	P[i]=MX[lo-1];
-	if(lo>lis) lis=lo;
+	return sz(aux);
 }
