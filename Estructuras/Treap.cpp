@@ -68,9 +68,10 @@ void insert(pitem& t, u_int pos, u_int val){
 
 void erase(pitem&t, u_int key, u_int add=0){
 	u_int cur_key = add+cnt(t->l);
-	if(key==cur_key)
+	if(key==cur_key){
+		delete t;
 		merge(t,t->l,t->r);
-	else{
+	}else{
 		if(key<cur_key)
 			erase(t->l, key, add);
 		else
