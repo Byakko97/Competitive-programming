@@ -22,6 +22,7 @@ int n;
 
 void convexhull(){
 	vector<Point> low, up;
+	//Es mejor borrar los duplicados de P
 	sort(P,P+n);
 	For(i,0,n){
 		while(sz(up)>=2 && !right(up[sz(up)-2],up.back(),P[i]))
