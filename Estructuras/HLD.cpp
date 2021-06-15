@@ -35,16 +35,15 @@ void hldupdate(int u, int v, int x){
 }
 
 int pathque(int u, int v){
-	assert(u!=v);
 	int ans=-1;
 	while(u!=-1){
 		if(rt[u]==rt[v]){
 			int a = id[u], b = id[v];
-			ans = max(ans, st.que(min(a,b)+1,max(a,b))); //por ser arista
+			ans = max(ans, st.que(min(a,b)+1,max(a,b)+1)); //por ser arista
 			u=-1;
 		}else{
 			if(d[rt[u]]>d[rt[v]]) swap(u,v);
-			ans = max(ans, st.que(id[rt[v]], id[v]));
+			ans = max(ans, st.que(id[rt[v]], id[v]+1));
 			v = p[rt[v]];
 		}
 	}
