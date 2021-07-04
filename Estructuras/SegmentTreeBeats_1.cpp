@@ -1,7 +1,7 @@
 struct nodo{
 	ll cantMay, may, second, sum;
 	bool leaf, lazy;
-} t[N<<1];
+} t[N*4];
 
 int A[N];
 
@@ -52,6 +52,7 @@ void propagate(int nodo){
 	t[nodo].lazy = 0;
 }
 
+// Queries maximum in closed range [ll, rr]
 int queMax(int ll, int rr, int l=0, int r=n-1, int nodo=1){
 	if(ll <= l && r <= rr) return t[nodo].may;
 	if(rr < l || r < ll) return -1;
@@ -60,6 +61,8 @@ int queMax(int ll, int rr, int l=0, int r=n-1, int nodo=1){
 	return max(queMax(ll,rr,l,m,nodo<<1),queMax(ll,rr,m+1,r,nodo<<1|1));
 }
 
+
+// Queries sum of closed range [ll, rr]
 ll queSum(int ll, int rr, int l=0, int r=n-1, int nodo=1){
 	if(ll <= l && r <= rr) return t[nodo].sum;
 	if(rr < l || r < ll) return 0;
@@ -68,6 +71,8 @@ ll queSum(int ll, int rr, int l=0, int r=n-1, int nodo=1){
 	return queSum(ll,rr,l,m,nodo<<1)+queSum(ll,rr,m+1,r,nodo<<1|1);
 }
 
+
+// Updates to the minimum between x and current value in the closed range [ll, rr]
 void upd(int ll, int rr, long long int x, int l=0, int r=n-1, int nodo=1){
 	if(rr<l || r < ll || t[nodo].may <= x)
 		return;
