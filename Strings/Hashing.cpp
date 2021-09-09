@@ -1,26 +1,27 @@
-ll pp1[N];
-ull pp2[N];
+const ll MOD = 1e9+7;
+const ll K = 2;
+const ll P[K] = {29, 31};
 
-void prec(){
-	pp1[0]=pp2[0]=1;
-	For(i,1,N){
-		pp1[i]=(pp1[i-1]*p)%MOD;
-		pp2[i]=pp2[i-1]*p;
-	}
+array<ll, K> pot[N];
+ 
+void prec() {
+	For(k,0,K) pot[0][k] = 1;
+	For(i,1,N)
+		For(k,0,K)
+			pot[i][k] = mul(pot[i-1][k], P[k]);
 }
-
+ 
 struct Hsh{
-	ll pref[N];
-	ull pref2[N];
-	void compute(string s){
-		s = '#' + s;
-		pref[0]=pref2[0]=0;
-		For(i,1,sz(s)){
-			pref[i] = (pref[i-1]*p+s[i])%MOD;
-			pref2[i]= pref2[i-1]*p+s[i];
-		}
+	array<ll, K> suf[N];
+	void init(string &s) {
+		roF(i,sz(s)-1,0)
+			For(k,0,K)
+				suf[i][k] = sum(mul(suf[i+1][k], P[k]), s[i] - 'a' + 1);
 	}
-	pair<ll, ull> get(int l, int r){ 
-		return mp((pref[r+1]-(pref[l]*pp1[r-l+1])%MOD+MOD)%MOD,pref2[r+1]-pref2[l]*pp2[r-l+1]);
+	array<ll, K> que(int l, int r) {
+		array<ll, K> cur;
+		For(k,0,K)
+			cur[k] = sum(suf[l][k], MOD - mul(suf[r][k], pot[r-l][k]));
+		return cur;
 	}
-};
+} hsh;
