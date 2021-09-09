@@ -1,42 +1,42 @@
-vi adj[N];
-vi SCC[N];
-set<int> adj2[N];
-int cont;
+int n, temp, cont;
+vi adj[N], SCC[N], adjSCC[N];
 bool vis[N];
-int low[N];
-int disc[N];
-int belong[N];
+int low[N], disc[N], belong[N];
 stack<int> S;
-int tm;
-
-void tarjan(int v){
-	int u;
-	disc[v]=low[v]=++tm;
+ 
+void dfs(int v) {
+	disc[v] = low[v] = ++temp;
 	S.push(v);
-	vis[v]=1;
-	for(int u: adj[v]){
+	vis[v] = 1;
+	for(int u: adj[v]) {
 		if(!disc[u])
-			tarjan(u);
+			dfs(u);
 		if(vis[u])
-			low[v]=min(low[u], low[v]);
+			low[v] = min(low[u], low[v]);
 	}
-	if(disc[v]==low[v]){
-		while(1){
-			u = S.top();
+	if(disc[v] == low[v]) {
+		while(1) {
+			int u = S.top();
 			S.pop();
-			vis[u]=0;
-			belong[u]=cont;
+			vis[u] = 0;
+			belong[u] = cont;
 			SCC[cont].pb(u);
-			if(u==v) break;
+			if(u == v) break;
 		}
 		cont++;
 	}
 }
-
-int main(){
-	tarjan(root);
-	rep(i, 0, cont)
+ 
+void tarjan() {
+	For(i,0,n)
+		if(!disc[i])
+			dfs(i);
+	For(i,0,cont) {
 		for(int u: SCC[i])
-			for(int v: adj[u]) if(belong[v]!=i)
-				adj2[i].insert(belong[v]);
+			for(int v: adj[u]) if(belong[v] != i) {
+				adjSCC[i].pb(belong[v]);
+			}
+		sort(all(adjSCC[i]));
+		adjSCC[i].resize(unique(all(adjSCC[i])) - adjSCC[i].begin());
+	}
 }
